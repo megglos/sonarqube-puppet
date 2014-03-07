@@ -25,9 +25,9 @@ class mysql {
   $l_user = "sonar"
   $l_pass = "sonar"
 
-  exec {"create-sonar-db":
+  exec {"create-sonarqube-db":
     unless => "mysql -u${l_user} -p${l_pass} ${l_db}",
-    command => "mysql -uroot -p${password} -e \"create database ${l_db};grant all on ${l_db}.* to ${l_user}@'localhost' identified by '${l_pass}'; flush privileges;\"",
+    command => "mysql -uroot -p${password} -e \"create database ${l_db}; grant all on ${l_db}.* to ${l_user}@'localhost' identified by '${l_pass}'; grant all on ${l_db}.* to ${l_user}@'%' identified by '${l_pass}';flush privileges;\"",
     path => ["/usr/bin", "/bin"],
     require => Exec["mysql-passwd"]
   }

@@ -8,23 +8,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-  config.vm.define "sonardevelopment" do |sonardevelopment|
-  end
-
-  config.vm.hostname = "sonardevelopment"
-
-  config.vm.provider :virtualbox do |vb, override|
-    vb.customize ["modifyvm", :id,
-        "--name", "sonardevelopment",
-        "--memory", "2048"]
-  end
-
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
     puppet.manifest_file = "base.pp"
     puppet.module_path = "modules"
   end
 
-config.vm.network :public_network
+  config.vm.network :public_network
 
 end
