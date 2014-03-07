@@ -14,6 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.module_path = "modules"
   end
 
-config.vm.network :forwarded_port, guest: 9000, host: 9000
-
+  #config.vm.network "private_network", ip: "192.168.50.4"
+  config.vm.network "public_network"
+  config.vm.hostname = "vagrant.example.com"
 end
