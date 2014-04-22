@@ -5,8 +5,8 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "precise64"
-  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.box = "ubuntu14.04"
+  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/20140422/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
   config.vm.define "sonarqubeserver" do |sonarqubeserver|
   end
@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :virtualbox do |vb, override|
     vb.customize ["modifyvm", :id,
         "--name", "sonarqubeserver",
-        "--memory", "2048"]
+        "--memory", "1024"]
   end
 
   config.vm.provision :puppet do |puppet|
@@ -25,7 +25,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.module_path = "modules"
   end
 
-  #config.vm.network "private_network", ip: "192.168.50.4"
-  config.vm.network "public_network"
-  #config.vm.hostname = "vagrant.example.com"
+  config.vm.network "public_network", :bridge => 'eth0'
+
 end

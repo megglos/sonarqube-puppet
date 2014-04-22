@@ -49,10 +49,22 @@ class sonarqube {
     require => Exec["unzip-sonarqube"]
   }
 
+  $l_db = "sonar"
+  $l_user = "sonar"
+  $l_pass = "sonar"
+  $password = "admin"
+
+  exec {"create-sonarqube-db":
+    unless => "mysql -u${l_user} -p${l_pass} ${l_db}",
+    command => "mysql -uroot -p${password} -e \"create database ${l_db}; grant all on ${l_db}.* to ${l_user}@'localhost' identified by '${l_pass}'; grant all on ${l_db}.* to ${l_user}@'%' identified by '${l_pass}';flush privileges;\"",
+    path => ["/usr/bin", "/bin"],
+    require => File["sonarqube.properties"]
+  }
+
   exec {"start-sonarqube":
     command => "${install_path}/${sonarqube_path}/bin/linux-x86-64/sonar.sh start",
     onlyif => "test -f ${install_path}/${sonarqube_path}/bin/linux-x86-64/sonar.sh",
     path => ["/usr/bin", "/bin"],
-    require => File["sonarqube.properties"]
+    require => Exec["create-sonarqube-db"]
   }
 }
