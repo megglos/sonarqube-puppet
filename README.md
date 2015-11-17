@@ -1,6 +1,6 @@
 # Sonarqube puppet installation
 
-Install Sonarqube 4.1.1 using Puppet in a Virtual Machine with Vagrant
+Install Sonarqube 5.2 using Puppet in a Virtual Machine with Vagrant along with some plugins
 
 ## Requirements
 
